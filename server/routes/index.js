@@ -39,9 +39,52 @@ router.get('/article/:id', function(req, res, next) {
 })
 
 router.post('/article/new', function(req, res, next) {
-  Article.create({
-    
+  Article.create(req.body, function(err, response) {
+    if (err) {
+      res.send(err);
+      console.log(err);
+    } else {
+      res.send('berhasil buat')
+    }
   })
 })
+
+router.put('/article/:id', function(req, res, next) {
+  Article.create(req.body, function(err, response) {
+    if (err) {
+      res.send(err);
+      console.log(err);
+    } else {
+      res.send('berhasil update')
+    }
+  })
+})
+
+router.get('/article/by-category', function(req, res, next) {
+  Article.find({
+    category: req.body.category
+  }, function(err, response) {
+    if (err) {
+      res.send(err);
+      console.log(err);
+    } else {
+      res.send(response)
+    }
+  })
+})
+
+router.get('/article/by-author', function(req, res, next) {
+  Article.find({
+    author: req.body.author
+  }, function(err, response) {
+    if (err) {
+      res.send(err);
+      console.log(err);
+    } else {
+      res.send(response)
+    }
+  })
+})
+
 
 module.exports = router;
