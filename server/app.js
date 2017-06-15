@@ -7,11 +7,24 @@ var bodyParser = require('body-parser');
 const cors = require('cors');
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/hacktivpress-sidik');
-
 var index = require('./routes/index');
 
 var app = express();
+
+var db_config = {
+  development: 'mongodb://localhost/hacktivpress-sidik',
+  test: 'mongodb://localhost/hacktivpress-sidik-test',
+}
+
+var current_env = app.settings.env
+
+mongoose.connect(db_config[current_env], function(err, res) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('connected to databse: ', db_config[current_env]);
+  }
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
