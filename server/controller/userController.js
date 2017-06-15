@@ -32,7 +32,11 @@ function signIn(req,res,next) {
       } else {
         console.log(response);
         if (bcrypt.compareSync(req.body.password, response.password)) {
-          res.send('berhasil')
+          let send = {
+            _id: response._id,
+            msg: 'berhasil'
+          }
+          res.send(send)
         } else {
           res.send('password salah')
         }

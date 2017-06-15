@@ -8,7 +8,7 @@
   </head>
   <body>
     <script src="https://unpkg.com/vue"></script>
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <div id="app">
       <nav class="nav">
@@ -49,7 +49,7 @@
                 </a>
               </p>
               <p class="control">
-                <a class="button is-primary">
+                <a class="button is-primary" @click="logOutGoGo">
                   <span>Log out</span>
                 </a>
               </p>
@@ -70,20 +70,20 @@
             <div class="field">
               <label class="label">Username</label>
               <p class="control">
-                <input class="input" type="text" placeholder="Username">
+                <input class="input" type="text" placeholder="Username" v-model="userSignUp">
               </p>
             </div>
 
             <div class="field">
               <label class="label">Password</label>
               <p class="control">
-                <input class="input" type="text" placeholder="Password">
+                <input class="input" type="password" placeholder="Password" v-model="passSignUp">
               </p>
             </div>
 
           </section>
           <footer class="modal-card-foot">
-            <a class="button is-success">Sign Up!</a>
+            <a class="button is-success" @click="signUpGoGo">Sign Up!</a>
             <a class="button" @click="closeModalSignUp">Cancel</a>
           </footer>
         </div>
@@ -101,35 +101,77 @@
             <div class="field">
               <label class="label">Username</label>
               <p class="control">
-                <input class="input" type="text" placeholder="Username">
+                <input class="input" type="text" placeholder="Username" v-model="userLogIn">
               </p>
             </div>
 
             <div class="field">
               <label class="label">Password</label>
               <p class="control">
-                <input class="input" type="text" placeholder="Password">
+                <input class="input" type="password" placeholder="Password" v-model="passLogIn">
               </p>
             </div>
 
           </section>
           <footer class="modal-card-foot">
-            <a class="button is-success">Log In!</a>
+            <a class="button is-success" @click="logInGoGo">Log In!</a>
             <a class="button" @click="closeLogIn">Cancel</a>
           </footer>
         </div>
       </div>
 
+      <!-- MODAL CREATE NEW POST -->
+      <div :class="modalCreateNew">
+        <div class="modal-background" @click="closeCreateNew"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Create New Post</p>
+            <button class="delete" @click="closeCreateNew"></button>
+          </header>
+          <section class="modal-card-body">
+            <div class="field">
+              <label class="label">Username</label>
+              <p class="control">
+                <input class="input" type="text" placeholder="Username" v-model="userLogIn">
+              </p>
+            </div>
+
+            <div class="field">
+              <label class="label">Password</label>
+              <p class="control">
+                <input class="input" type="password" placeholder="Password" v-model="passLogIn">
+              </p>
+            </div>
+
+          </section>
+          <footer class="modal-card-foot">
+            <a class="button is-success" @click="logInGoGo">Log In!</a>
+            <a class="button" @click="closeCreateNewn">Cancel</a>
+          </footer>
+        </div>
+      </div>
     </div>
 
 
     <script type="text/javascript">
+    let tokenUser = localStorage.getItem('tokenUser')
+    let tokenID = localStorage.getItem('tokenID')
       var app = new Vue({
       el: '#app',
       data: {
         isLogin: false,
         modalSignUp: "modal",
-        modalLogIn: "modal"
+        modalLogIn: "modal",
+        modalCreateNew: "modal",
+        userSignUp: '',
+        passSignUp: '',
+        userLogIn: '',
+        passLogIn: '',
+        currUser: {
+          username: '',
+          _id: ''
+        },
+        articleList: []
       },
       methods: {
         showModalSignUp: function() {
@@ -143,9 +185,60 @@
         },
         closeLogIn: function() {
           this.modalLogIn = "modal"
+        },
+        signUpGoGo: function() {
+          let self = this
+          axios.post('http://localhost:3000/signup', {
+            newUser: self.userSignUp,
+            newPass: self.passSignUp
+          }).then( function(response) {
+            self.userSignUp = '',
+            self.passSignUp = '',
+            self.closeModalSignUp()
+          }).catch( function(error) {
+            alert(error)
+          })
+        },
+        logInGoGo: function() {
+          let self = this
+          axios.post('http://localhost:3000/signin', {
+            username: self.userLogIn,
+            password: self.passLogIn
+          }).then(function(response) {
+            if (response.data.msg == "berhasil") {
+              self.isLogin = true
+              self.currUser._id = response.data._id
+              self.currUser.username = self.userLogIn
+              localStorage.setItem("tokenUser", self.currUser.username)
+              localStorage.setItem("tokenID", self.currUser._id)
+              self.userLogIn = ''
+              self.passLogIn = ''
+              self.closeLogIn()
+            }
+          })
+        },
+        logOutGoGo: function() {
+          localStorage.clear();
+          isLogin = false;
+          location.reload();
+        },
+        checkLogIn: function() {
+          if (tokenUser) {
+            console.log('atasnya ini');
+            this.isLogin = true;
+            this.currUser.username = tokenUser
+            this.currUser._id = tokenID
+          } else {
+            console.log('masuk sini');
+            this.isLogin = false
+          }
+        },
+        showModalCreateNew: function() {
+
         }
       }
-      })
+    })
+    app.checkLogIn()
     </script>
   </body>
 </html>
