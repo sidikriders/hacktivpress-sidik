@@ -29,7 +29,12 @@ function getOne(req, res, next) {
 }
 
 function createNew(req, res, next) {
-  Article.create(req.body, function(err, response) {
+  Article.create({
+    title: req.body.newTitle,
+    content: req.body.newContent,
+    category: req.body.newCategory,
+    author: req.body.newAuthor
+  }, function(err, response) {
     if (err) {
       res.send(err);
       console.log(err);

@@ -15,6 +15,13 @@ $ npm install
 $ npm run dev
 ```
 
+### Testing
+
+```sh
+$ cd server
+$ NODE_ENV=test mocha
+```
+
 ### API endpoint
 
 Berikut API yang bisa d gunakan dalam web app ini:

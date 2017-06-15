@@ -12,7 +12,7 @@ function signUp(req, res, next) {
       res.send(err)
       console.log(err);
     } else {
-      res.send(req.body.username + ' berhasil di buat')
+      res.send(req.body.newUser + ' berhasil di buat')
       console.log('ini response dari create');
       console.log(response);
     }
@@ -30,6 +30,7 @@ function signIn(req,res,next) {
       if (!response) {
         res.send('username tidak ditemukan')
       } else {
+        console.log(response);
         if (bcrypt.compareSync(req.body.password, response.password)) {
           res.send('berhasil')
         } else {
