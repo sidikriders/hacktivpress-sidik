@@ -6,11 +6,7 @@ function getAll(req, res, next) {
       res.send(err);
       console.log(err);
     } else {
-      if (response.length = 0) {
-        res.send('Belum ada Artikel Blog yang di bagikan')
-      } else {
-        res.send(response)
-      }
+      res.send(response)
     }
   })
 }
@@ -39,6 +35,7 @@ function createNew(req, res, next) {
       res.send(err);
       console.log(err);
     } else {
+      console.log(response);
       res.send('berhasil buat')
     }
   })

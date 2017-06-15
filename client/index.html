@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HacktivPress | Sidik</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.css">
+  </head>
+  <body>
+    <script src="https://unpkg.com/vue"></script>
+
+
+    <div id="app">
+      <nav class="nav">
+        <div class="nav-left">
+          <a class="nav-item">
+            <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma logo">
+          </a>
+        </div>
+
+        <div class="nav-center">
+          <div class="nav-item">
+            <p>HACKTIVPRESS - SIDIK</p>
+          </div>
+        </div>
+
+
+        <!-- This "nav-menu" is hidden on mobile -->
+        <!-- Add the modifier "is-active" to display it on mobile -->
+        <div class="nav-right nav-menu">
+
+          <div class="nav-item">
+            <div v-if="isLogin == false" class="field is-grouped">
+              <p class="control">
+                <a class="button is-warning" @click="showModalSignUp">
+                  <span>Sign Up</span>
+                </a>
+              </p>
+              <p class="control">
+                <a class="button is-primary" @click="showModalLogIn">
+                  <span>Log in</span>
+                </a>
+              </p>
+            </div>
+            <div v-else-if="isLogin == true" class="field is-grouped">
+              <p class="control">
+                <a class="button is-warning" @click="showModalCreateNew">
+                  <span>Create New</span>
+                </a>
+              </p>
+              <p class="control">
+                <a class="button is-primary">
+                  <span>Log out</span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- MODAL SIGN UP -->
+      <div :class="modalSignUp">
+        <div class="modal-background" @click="closeModalSignUp"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Create New Account</p>
+            <button class="delete" @click="closeModalSignUp"></button>
+          </header>
+          <section class="modal-card-body">
+            <div class="field">
+              <label class="label">Username</label>
+              <p class="control">
+                <input class="input" type="text" placeholder="Username">
+              </p>
+            </div>
+
+            <div class="field">
+              <label class="label">Password</label>
+              <p class="control">
+                <input class="input" type="text" placeholder="Password">
+              </p>
+            </div>
+
+          </section>
+          <footer class="modal-card-foot">
+            <a class="button is-success">Sign Up!</a>
+            <a class="button" @click="closeModalSignUp">Cancel</a>
+          </footer>
+        </div>
+      </div>
+
+      <!-- MODAL SIGN IN -->
+      <div :class="modalLogIn">
+        <div class="modal-background" @click="closeLogIn"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Log In</p>
+            <button class="delete" @click="closeLogIn"></button>
+          </header>
+          <section class="modal-card-body">
+            <div class="field">
+              <label class="label">Username</label>
+              <p class="control">
+                <input class="input" type="text" placeholder="Username">
+              </p>
+            </div>
+
+            <div class="field">
+              <label class="label">Password</label>
+              <p class="control">
+                <input class="input" type="text" placeholder="Password">
+              </p>
+            </div>
+
+          </section>
+          <footer class="modal-card-foot">
+            <a class="button is-success">Log In!</a>
+            <a class="button" @click="closeLogIn">Cancel</a>
+          </footer>
+        </div>
+      </div>
+
+    </div>
+
+
+    <script type="text/javascript">
+      var app = new Vue({
+      el: '#app',
+      data: {
+        isLogin: false,
+        modalSignUp: "modal",
+        modalLogIn: "modal"
+      },
+      methods: {
+        showModalSignUp: function() {
+          this.modalSignUp = "modal is-active"
+        },
+        closeModalSignUp: function() {
+          this.modalSignUp = "modal"
+        },
+        showModalLogIn: function() {
+          this.modalLogIn = "modal is-active"
+        },
+        closeLogIn: function() {
+          this.modalLogIn = "modal"
+        }
+      }
+      })
+    </script>
+  </body>
+</html>

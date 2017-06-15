@@ -87,7 +87,6 @@ describe('User dan Article', () => {
       .end((err, res) => {
         res.should.have.status(200)
         res.body.should.be.a('array')
-        res.body.length.should.equal(0)
       })
     })
   })
