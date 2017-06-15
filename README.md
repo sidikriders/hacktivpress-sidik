@@ -1,6 +1,6 @@
 # hacktivpress-sidik
 
-Hacktivpress-sidik adalah web app sederhana untuk berbagi post dan blog.
+Hacktivpress-sidik adalah web app sederhana untuk berbagi post dan article blog.
 
 ### Installation
 
@@ -23,8 +23,11 @@ Berikut API yang bisa d gunakan dalam web app ini:
 |------| ------ | ------ |
 | POST | /signup | create new user |
 | POST | /signin | authenticate user |
-| GET | / | get all blog post |
-| POST | /blog/new | create new blog post |
-| GET | /blog/:id | view only 1 blog post |
-| PUT | /blog/:id | edit blog post |
-| DELETE | /blog/:id | delete blog post |
+| GET | / | get all article blog post |
+| POST |  article/new | create new article blog post |
+| GET |  article/:id | view only 1 article blog post |
+| GET | article/by-category | view article blog post by it's category |
+| GET | article/by-author | view article blog post by it's author |
+| GET | /my-article | view current user's articles |
+| PUT |  article/:id | edit article blog post |
+| DELETE |  article/:id | delete article blog post |
